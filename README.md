@@ -1,116 +1,101 @@
-# \# Employee Attendance \& Analytics API
+# Employee Attendance & Analytics API
 
-# 
+A backend application for employee attendance management and analytics built using **Python, FastAPI, and MongoDB**.
 
-# A backend application for employee attendance management and analytics, built using \*\*FastAPI\*\*, \*\*Python\*\*, and \*\*MongoDB\*\*.
+## Features
 
-# 
+- Create and list employees with pagination and department filtering.
+- Record employee attendance through punch-in and punch-out endpoints.
+- Calculate work hours, late minutes, overtime, and half-day status.
+- Correct attendance records with an audit history.
+- Generate monthly employee attendance summaries.
+- Generate department-wise attendance summaries.
+- Rank employees by late arrivals, including tie handling.
+- Generate department attendance trends with a seven-day moving average.
+- Create MongoDB indexes for efficient queries.
+- Inspect query execution plans using the explain endpoint.
 
-# \## Features
+## Tech Stack
 
-# 
+- **Language:** Python 3.11+
+- **Backend Framework:** FastAPI
+- **Database:** MongoDB
+- **Database Driver:** PyMongo
+- **Validation:** Pydantic
+- **ASGI Server:** Uvicorn
 
-# \- Employee creation and listing with pagination.
+## Project Structure
 
-# \- Attendance punch-in and punch-out.
+```text
+attendance_api_submission/
+├── app/
+│   ├── __init__.py
+│   └── main.py
+├── requirements.txt
+├── README.md
+├── REVIEW.md
+└── DECISIONS.md
+```
 
-# \- Attendance record correction with audit history.
+## Installation and Setup
 
-# \- Employee monthly attendance analytics.
+### 1. Clone the repository
 
-# \- Department-wise attendance summaries.
+```bash
+git clone https://github.com/Zohaib724/Employee-Attendance-Analytics.git
+cd Employee-Attendance-Analytics
+```
 
-# \- Late-comer leaderboard with ranking and tie handling.
+### 2. Install dependencies
 
-# \- Department attendance trends with a seven-day moving average.
+```bash
+pip install -r requirements.txt
+```
 
-# \- MongoDB indexes and query explain endpoint.
+### 3. Configure MongoDB
 
-# 
+Set the following environment variables with your MongoDB connection details:
 
-# \## Tech Stack
+- `MONGO_URI` — MongoDB connection URI.
+- `MONGO_DB` — Database name.
 
-# 
+Ensure that MongoDB is running and accessible before starting the application.
 
-# \- Python 3.11+
+### 4. Start the application
 
-# \- FastAPI
+```bash
+uvicorn app.main:app --port 8000
+```
 
-# \- PyMongo
+### 5. Access the API
 
-# \- MongoDB
+Once the server is running, visit:
 
-# \- Pydantic
+- **Interactive API documentation:** http://127.0.0.1:8000/docs
+- **Health check:** http://127.0.0.1:8000/health
 
-# \- Uvicorn
+## API Endpoints
 
-# 
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/health` | Check database connectivity |
+| POST | `/employees` | Create an employee |
+| GET | `/employees` | List and filter employees |
+| POST | `/attendance/punch-in` | Record employee punch-in |
+| GET | `/attendance` | List attendance records |
+| POST | `/attendance/punch-out` | Record punch-out and calculate work hours |
+| PATCH | `/attendance/{emp_code}/{date}` | Regularize an attendance record |
+| GET | `/analytics/employees/{emp_code}/monthly` | Monthly employee summary |
+| GET | `/analytics/departments/summary` | Department attendance summary |
+| GET | `/analytics/leaderboard/late` | Late-comer leaderboard |
+| GET | `/analytics/departments/{department}/trend` | Department attendance trend |
+| GET | `/admin/explain/{endpoint}` | Inspect MongoDB query execution plans |
 
-# \## Setup and Run
+## Documentation
 
-# 
+- `REVIEW.md` — Code review findings and fixes.
+- `DECISIONS.md` — Technical decisions and design explanations.
 
-# 1\. Install dependencies:
+## Notes
 
-# 
-
-# &#x20;  ```bash
-
-# &#x20;  pip install -r requirements.txt
-
-# &#x20;  ```
-
-# 
-
-# 2\. Configure the environment variables `MONGO\_URI` and `MONGO\_DB` with your MongoDB connection details.
-
-# 
-
-# 3\. Start the application:
-
-# 
-
-# &#x20;  ```bash
-
-# &#x20;  uvicorn app.main:app --port 8000
-
-# &#x20;  ```
-
-# 
-
-# 4\. Open `http://127.0.0.1:8000/docs` to explore the API documentation.
-
-# 
-
-# \## Project Structure
-
-# 
-
-# ```text
-
-# .
-
-# ├── app/
-
-# │   ├── \_\_init\_\_.py
-
-# │   └── main.py
-
-# ├── requirements.txt
-
-# ├── README.md
-
-# ├── REVIEW.md
-
-# └── DECISIONS.md
-
-# ```
-
-# 
-
-# \## Notes
-
-# 
-
-# The application follows the attendance rules and API contract provided in the engineering assignment. Configure MongoDB before running the application and test the endpoints against the supplied data.
-
+The API is designed to follow the engineering assignment's attendance rules, validation requirements, and MongoDB data model. Configure the database before running the application and verify the endpoints with the supplied sample data.
